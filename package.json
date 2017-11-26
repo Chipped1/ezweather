@@ -1,0 +1,22 @@
+{
+  "name": "ezweather",
+  "version": "1.0.9",
+  "description": "Get the full weather info of any location in the world.",
+  "main": "app.js",
+  "dependencies": {
+    "superagent": "^3.8.1"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Chipped1/ezweather.git"
+  },
+  "author": "Saif",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Chipped1/ezweather/issues"
+  },
+  "homepage": "https://github.com/Chipped1/ezweather#readme"
+}
