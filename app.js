@@ -16,6 +16,8 @@ chip.weather = async function(gKEY, dsKEY, location, callback) {
         try {
         var parsedJson = JSON.parse(res.text);
         var info = parsedJson.results[0];
+        var apiError = parsedJson.error_message;
+        if (apiError === 'The provided API key is invalid.') return callback('Invalid Geocode API key.')
         if (!info) return callback('Invalid location given.')
         //console.log(info); if needed to add more geo info, enable
         lat = info.geometry.location.lat;
@@ -28,21 +30,22 @@ chip.weather = async function(gKEY, dsKEY, location, callback) {
    // Use the lattitude and longitude to get the weather using darksky's weather api, which uses longitude and latitude
       request.get(`https://api.darksky.net/forecast/${dsKEY}/${lat},${long}`)
       .end(function(err, res) {
-
+        // Error checking
+        if(dsKEY.length !== 32 || /[A-Z]/.test(dsKEY)) return callback('Invalid Darksky API key.');
         var requestLimitChecker = res.text.toString().toLowerCase();
         if(requestLimitChecker.includes('forbidden')) return callback('Maximum API requests reached, please wait another day.');
-
-        var w = JSON.parse(res.text)
         if(err) return callback(err);
-        //console.log(w); if needed to add more features on weather, enable
+
+        var parsedJson = JSON.parse(res.text)
+        //console.log(parsedJson); if needed to add more features on weather, enable
         // Summaries:
-        var summary = w.currently.summary; // The weather summary for now
-        var hSummary = w.currently.summary; // Hour's summary
-        var dSummary = w.daily.summary; // Today's summary
+        var summary = parsedJson.currently.summary; // The weather summary for now
+        var hSummary = parsedJson.currently.summary; // Hour's summary
+        var dSummary = parsedJson.daily.summary; // Today's summary
         // Image variable
         var img;
         // Temperatures
-        var temp = w.currently.temperature; // Temperature in Fahernheit
+        var temp = parsedJson.currently.temperature; // Temperature in Fahernheit
         var tempC = (5/9) * (temp-32); // Temperature in Celsius
         tempC = tempC.toFixed(1);
         tempC = parseFloat(tempC);
