@@ -5,12 +5,13 @@ Get the weather of any location in the world.
 An example on how to use this package.
 
 ```js
-var weather = require('ezweather');
+const weather = require('ezweather');
+
 const googleAPIKEY = 'insertyourapi'; // Get your API key on https://developers.google.com/maps/documentation/geocoding/get-api-key
 const darkskyAPIKEY = 'insertyourapi'; // Get your API key on https://darksky.net/dev
 
-weather(googleAPIKEY, darkskyAPIKEY, 'Dublin', function(res) {
-    console.log(res)
+weather(googleAPIKEY, darkskyAPIKEY, 'Dublin', (res) => {
+    console.log(res);
 });
 ```
 
